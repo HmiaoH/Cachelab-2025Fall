@@ -1,10 +1,10 @@
-name: GitHub Classroom Workflow
-
+name: Autograding CSIM
 on: 
   push:
     branches: [ main, dev-* ]
   pull_request:
     branches: [ main ]
+  - repository_dispatch
 
 permissions:
   checks: write
@@ -12,73 +12,25 @@ permissions:
   contents: read
 
 jobs:
-  build:
-    name: Autograding
-    runs-on: ubuntu-latest
+  run-csim-tests:
+    runs-on: ubuntu-20.04
     if: github.actor != 'github-classroom[bot]'
     steps:
+      # 拉取代码
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Install dependencies
+      # 确保参考程序和学生程序可执行
+      - name: Ensure executables
         run: |
-          sudo apt-get update
-          sudo apt-get install -y gcc g++ make python3 python3-pip bc
-          
-      - name: Setup environment
-        run: |
-          gcc --version
-          g++ --version
-          python3 --version
+          chmod +x csim-ref
 
-      - name: Compilation
-        run: |
-          echo "Compiling project..."
-          cd $GITHUB_WORKSPACE
-          make clean
-          make all
-          if [ $? -ne 0 ]; then
-            echo "✗ Compilation failed"
-            exit 1
-          fi
-          echo "✓ Compilation successful"
-
-      - name: Cache Simulator Tests
-        id: cache-tests
-        run: |
-          echo "Testing cache simulator with Python test suite..."
-
-          # Run the comprehensive Python test
-          cd $GITHUB_WORKSPACE/test
-          python3 csim_test2.py
-
-          # Read the score from the result file
-          if [ -f ".autograder_result" ]; then
-            score=$(cat .autograder_result)
-            # Linear scoring: direct use of 0-100 score
-            echo "Cache simulator score: $score"
-            echo "points=$score" >> $GITHUB_OUTPUT
-
-            echo "⚠ Cache simulator tests completed with ${score} points"
-          else
-            echo "✗ Test result file not found"
-            echo "points=0" >> $GITHUB_OUTPUT
-          fi
-
-
-      - name: Calculate Final Score
-        run: |
-          cache_points="${{ steps.cache-tests.outputs.points || 0 }}"
-
-          echo "=== AUTOGRADING RESULTS ==="
-          echo "Cache Simulator: $cache_points/100"
-          echo "=========================="
-          echo "FINAL SCORE: $cache_points/100"
-          echo "=========================="
-
-          if [ $(echo "$cache_points >= 100" | bc -l) -eq 1 ]; then
-            echo "🎉 PASSED - Score: $cache_points/100"
-          else
-            echo "❌ FAILED - Score: $cache_points/100"
-            exit 1
-          fi
+      # 运行 csim 测试
+      - name: Run csim test
+        id: csim-test
+        uses: education/autograding@v1
+        with:
+          test-name: csim test
+          command: python3 test/csim_test2.py
+          timeout: 20
+          max-score: 100
