@@ -34,6 +34,7 @@ jobs:
       - name: Compilation
         run: |
           echo "Compiling project..."
+          cd $GITHUB_WORKSPACE
           make clean
           make all
           if [ $? -ne 0 ]; then
@@ -48,7 +49,7 @@ jobs:
           echo "Testing cache simulator with Python test suite..."
 
           # Run the comprehensive Python test
-          cd test
+          cd $GITHUB_WORKSPACE/test
           python3 csim_test2.py
 
           # Read the score from the result file
