@@ -18,17 +18,25 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # 确保参考程序和学生程序可执行
-      - name: Ensure executables
-        run: |
-          chmod +x csim-ref
+      # 确保参考程序可执行
+      - name: Ensure reference executable
+        run: chmod +x csim-ref
 
-      # 运行 csim 测试
+      # 运行 csim 测试并折叠日志
       - name: Run csim test
         id: csim-test
-        uses: education/autograding@v1
-        with:
-          test-name: csim test
-          command: python3 test/csim_test2.py
-          timeout: 20
-          max-score: 100
+        run: |
+          echo "::group::CSIM Test Output"
+          python3 test/csim_test2.py
+          echo "::endgroup::"
+
+      # 输出总分
+      - name: Report score
+        run: |
+          if [ -f .csim_results ]; then
+            score=$(cat .csim_results)
+            echo "CSIM Score: $score / 100"
+          else
+            echo "No score file found. Check test output above."
+            exit 1
+          fi
