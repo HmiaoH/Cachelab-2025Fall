@@ -31,34 +31,16 @@ jobs:
           g++ --version
           python3 --version
 
-      - name: Compilation Test
-        id: compilation
+      - name: Compilation
         run: |
-          echo "Testing compilation..."
+          echo "Compiling project..."
           make clean
           make all
-          if [ $? -eq 0 ]; then
-            echo "✓ Compilation successful"
-            echo "points=20" >> $GITHUB_OUTPUT
-          else
+          if [ $? -ne 0 ]; then
             echo "✗ Compilation failed"
-            echo "points=0" >> $GITHUB_OUTPUT
             exit 1
           fi
-
-      - name: Legality Test
-        id: legality
-        run: |
-          echo "Testing code legality..."
-          cd test
-          bash test.sh
-          if [ $? -eq 0 ]; then
-            echo "✓ Legality test passed"
-            echo "points=10" >> $GITHUB_OUTPUT
-          else
-            echo "✗ Legality test failed"
-            echo "points=0" >> $GITHUB_OUTPUT
-          fi
+          echo "✓ Compilation successful"
 
       - name: Cache Simulator Tests
         id: cache-tests
@@ -72,62 +54,30 @@ jobs:
           # Read the score from the result file
           if [ -f ".autograder_result" ]; then
             score=$(cat .autograder_result)
-            # Scale score from 0-100 to 0-40 (40 points total for cache tests)
-            scaled_points=$(python3 -c "import math; print(int($score * 0.4))")
-            echo "Python test score: $score%"
-            echo "Scaled points: $scaled_points/40"
-            echo "points=$scaled_points" >> $GITHUB_OUTPUT
+            # Linear scoring: direct use of 0-100 score
+            echo "Cache simulator score: $score"
+            echo "points=$score" >> $GITHUB_OUTPUT
 
-            if [ $(echo "$score >= 80" | bc -l) -eq 1 ]; then
-              echo "✓ Cache simulator tests passed with ${score}% accuracy"
-            else
-              echo "⚠ Cache simulator tests completed with ${score}% accuracy"
-            fi
+            echo "⚠ Cache simulator tests completed with ${score} points"
           else
             echo "✗ Test result file not found"
             echo "points=0" >> $GITHUB_OUTPUT
           fi
 
-      - name: Matrix Multiplication Performance Test
-        id: gemm-test
-        run: |
-          echo "Testing matrix multiplication performance..."
-          if [ -f "./printTrace" ]; then
-            # Test basic functionality
-            timeout 30 ./printTrace case1 > /dev/null 2>&1
-            if [ $? -eq 0 ]; then
-              echo "✓ Matrix multiplication basic test passed"
-              echo "points=25" >> $GITHUB_OUTPUT
-            else
-              echo "✗ Matrix multiplication test failed or timed out"
-              echo "points=0" >> $GITHUB_OUTPUT
-            fi
-          else
-            echo "✗ printTrace executable not found"
-            echo "points=0" >> $GITHUB_OUTPUT
-          fi
 
       - name: Calculate Final Score
         run: |
-          comp_points="${{ steps.compilation.outputs.points || 0 }}"
-          legal_points="${{ steps.legality.outputs.points || 0 }}"
           cache_points="${{ steps.cache-tests.outputs.points || 0 }}"
-          gemm_points="${{ steps.gemm-test.outputs.points || 0 }}"
-          
-          total=$((comp_points + legal_points + cache_points + gemm_points))
-          
+
           echo "=== AUTOGRADING RESULTS ==="
-          echo "Compilation: $comp_points/20"
-          echo "Legality: $legal_points/10"
-          echo "Cache Simulator: $cache_points/40"
-          echo "Matrix Multiplication: $gemm_points/25"
+          echo "Cache Simulator: $cache_points/100"
           echo "=========================="
-          echo "TOTAL SCORE: $total/95"
+          echo "FINAL SCORE: $cache_points/100"
           echo "=========================="
-          
-          if [ $total -ge 70 ]; then
-            echo "🎉 PASSED - Score: $total/95"
+
+          if [ $(echo "$cache_points >= 100" | bc -l) -eq 1 ]; then
+            echo "🎉 PASSED - Score: $cache_points/100"
           else
-            echo "❌ FAILED - Score: $total/95"
+            echo "❌ FAILED - Score: $cache_points/100"
             exit 1
           fi
