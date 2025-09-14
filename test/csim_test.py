@@ -6,7 +6,7 @@ from utils import *
 def output_results(results: list):
     results2 = results.copy()
     total_ok = sum(1 for status, *_ in results2 if status == "OK ")
-    score = 100 * (total_ok / len(results2)) ** (1 / 4)
+    score = 100 * (total_ok / len(results2))
     results2.insert(
         0,
         [
