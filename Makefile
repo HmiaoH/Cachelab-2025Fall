@@ -1,7 +1,11 @@
 CC=gcc
 CXX=g++
-CFLAGS=-Wall -O0 -g -std=c2x -fsanitize=address -fno-omit-frame-pointer -fdiagnostics-color=always
-CXXFLAGS=-Wall -O0 -g -std=c++23 -fsanitize=address -fno-omit-frame-pointer -fdiagnostics-color=always
+# CFLAGS=-Wall -O0 -g -std=c2x -fsanitize=address -fno-omit-frame-pointer -fdiagnostics-color=always
+# CXXFLAGS=-Wall -O0 -g -std=c++23 -fsanitize=address -fno-omit-frame-pointer -fdiagnostics-color=always
+
+CFLAGS=-Wall -O0 -g -std=c2x -fno-omit-frame-pointer -fdiagnostics-color=always
+CXXFLAGS=-Wall -O0 -g -std=c++23 -fno-omit-frame-pointer -fdiagnostics-color=always
+
 CSIM_REF_FLAGS=-Wall -O3 -std=c2x
 
 ifeq ($(wildcard csim.cpp), csim.cpp)
