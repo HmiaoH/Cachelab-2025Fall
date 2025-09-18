@@ -118,7 +118,7 @@ Examples:
 
 完成后，我们会将你的 csim 和提供的 csim-ref 的运行结果进行比对，测试文件在 `traces` 文件夹下，你需要保证输出一致。
 
-![cache](./imgs/cache.jpg)
+![cache](./img/cache.jpg)
 
 #### 实现要求
 

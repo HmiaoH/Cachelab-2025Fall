@@ -64,4 +64,4 @@ case%: printTrace
 # clean:
 # 	rm -rf printTrace demo *.o csim gemm_traces .csim_results .overall_results .autograder_result .last_submit_time workspaces .baseline
 clean:
-	rm -rf printTrace csim gemm_traces .csim_results .overall_results .autograder_result .last_submit_time workspaces .baseline
+	rm -rf printTrace csim gemm_traces .csim_results .overall_results .autograder_result .last_submit_time workspaces .baseline *.o
