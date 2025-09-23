@@ -58,7 +58,7 @@ case%: printTrace
 	@if [ "$(NO_LINUX)" = "true" ]; then \
 		./csim -s $(case_s) -E $(case_E) -b $(case_b) -t gemm_traces/$@.trace; \
 	else \
-		./csim -s $(case_s) -E $(case_E) -b $(case_b) -t gemm_traces/$@.trace; \
+		./csim-ref -s $(case_s) -E $(case_E) -b $(case_b) -t gemm_traces/$@.trace; \
 	fi
 
 # clean:

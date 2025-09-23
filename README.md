@@ -451,7 +451,7 @@ void example_now(ptr_reg mem){
 
 你可以运行 `./printTrace case1` 来查看你的算法执行 case1 的矩阵乘法时对应的 trace 文件。
 
-运行 `make case1` 会帮你把这份 trace 文件保存到 `gemm_traces/case1.trace` 下，并调用 `csim` 来计算对应的 cache 行为。
+运行 `make case1` 会帮你把这份 trace 文件保存到 `gemm_traces/case1.trace` 下，并调用 `csim-ref` 来计算对应的 cache 行为。
 
 不难看出，其中 misses 就代表了你的算法读写内存的次数，记作 $miss_{cache}$。同时，trace 文件的行数就代表了你读写 cache 的次数，记作 $miss_{reg}$。
 
