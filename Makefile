@@ -22,9 +22,9 @@ else
 	CSIM_SOURCE=csim.c
 endif
 
-case_s=4
+case_s=5
 case_E=1
-case_b=5
+case_b=4
 
 # all: csim demo printTrace
 all: csim printTrace

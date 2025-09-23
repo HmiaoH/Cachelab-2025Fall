@@ -13,9 +13,9 @@
 #define case2_n 32
 #define case2_p 32
 
-#define case3_m 31
+#define case3_m 29
 #define case3_n 35
-#define case3_p 31
+#define case3_p 29
 
 void test_case(int m, int n, int p, void (*gemm_case)(ptr_reg, ptr_reg, ptr_reg, ptr_reg));
 void case0();
