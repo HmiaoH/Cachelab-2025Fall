@@ -86,7 +86,7 @@ inline int current_reg_count = 0;
 
 namespace
 {
-  constexpr int reg_num = 32;
+  constexpr int reg_num = 36;
 
   bool reg_map[reg_num] = {0};
 

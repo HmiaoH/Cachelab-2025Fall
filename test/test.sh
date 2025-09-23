@@ -1,15 +1,15 @@
 #!/bin/bash
 
-g++ -fsyntax-only -Wall -O0 -g -std=c++23 -fsanitize=address -fno-omit-frame-pointer -Itest/fake_include test/legality_test_example1.cpp > /dev/null 2>&1 &
+g++ -fsyntax-only -Wall -O0 -g -std=c++23 -fno-omit-frame-pointer -Itest/fake_include test/legality_test_example1.cpp > /dev/null 2>&1 &
 pid1=$!
 
-g++ -fsyntax-only -Wall -O0 -g -std=c++23 -fsanitize=address -fno-omit-frame-pointer -Itest/fake_include test/legality_test_example2.cpp > /dev/null 2>&1 &
+g++ -fsyntax-only -Wall -O0 -g -std=c++23 -fno-omit-frame-pointer -Itest/fake_include test/legality_test_example2.cpp > /dev/null 2>&1 &
 pid2=$!
 
-g++ -fsyntax-only -Wall -O0 -g -std=c++23 -fsanitize=address -fno-omit-frame-pointer -Itest/fake_include test/legality_test_example3.cpp > /dev/null 2>&1 &
+g++ -fsyntax-only -Wall -O0 -g -std=c++23 -fno-omit-frame-pointer -Itest/fake_include test/legality_test_example3.cpp > /dev/null 2>&1 &
 pid3=$!
 
-g++ -fsyntax-only -Wall -O0 -g -std=c++23 -fsanitize=address -fno-omit-frame-pointer -Itest/fake_include test/legality_test_example4.cpp > /dev/null 2>&1 &
+g++ -fsyntax-only -Wall -O0 -g -std=c++23 -fno-omit-frame-pointer -Itest/fake_include test/legality_test_example4.cpp > /dev/null 2>&1 &
 pid4=$!
 
 wait $pid1
