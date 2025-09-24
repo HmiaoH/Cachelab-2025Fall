@@ -453,7 +453,7 @@ void example_now(ptr_reg mem){
 
 运行 `make case1` 会帮你把这份 trace 文件保存到 `gemm_traces/case1.trace` 下，并调用 `csim-ref` 来计算对应的 cache 行为。
 
-不难看出，其中 misses 就代表了你的算法读写内存的次数，记作 $miss_{cache}$。同时，trace 文件的行数就代表了你读写 cache 的次数，记作 $miss_{reg}$。
+不难看出，其中 misses 就代表了你的`gemm.cpp`算法读写内存的次数，记作 $miss_{cache}$。同时，trace 文件的行数就代表了你读写 cache 的次数，记作 $miss_{reg}$。
 
 我们的实验要求你最优化内存和 cache 的访问时间，即最优化 $latency = 15 \times miss_{cache} + miss_{reg}$。
 
@@ -541,6 +541,7 @@ python3 test/gemm_test.py
 | report 及代码风格 | 20   | 代码与 report 的风格和可读性 |
 
 > Part B 我们会认真阅读报告，如果你的报告体现了对问题的**技术性深度思考**，并且这些思考对其他计算机问题是有益的，虽然可能在本问题参数下，最终实际效果有限，也可以得到可观的分数（注意需要是技术性的，具体的，可操作的，有论证的，而不是“可能”）
+> 注意，在Part B中提交到github上的autograding仅检查代码合法性，其输出的分数不作为最后评分参考。
 
 ### 迟交
 

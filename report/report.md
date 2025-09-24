@@ -12,7 +12,7 @@
 
 Autograder 截图：
 
-![](./img/autograder.png)
+![](./img/autograding-result.png)
 
 <!-- 请同时将 Github Action 中的 csim test 和 gemm test 展开截图，并保证左上角出现你的仓库名，你可能需要调整浏览器缩放 -->
 
