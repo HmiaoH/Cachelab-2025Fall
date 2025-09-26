@@ -519,6 +519,18 @@ python3 test/gemm_test.py
 - 在实际的工业场合，对于矩阵乘法优化问题，相较于理论分析，我们常常是穷举超参数，比如分块的大小来确定最优的参数，所以当你发现问题过于复杂时不妨尝试穷举。换言之，你可以思考不同的“大致方案”，然后跑一下看看结果。而不必强求分析出某个具体方案再实施。
 - 你可以使用 [`parabuild-rust`](https://github.com/panjd123/parabuild-rust) 项目来方便地批量修改超参数并编译执行，如果你使用了这个项目，请给这个项目一个 star 并在报告中提及（你用了这个项目），更多信息可以见[这里](./parabuild_example/README.md)。
 
+## 如何调试
+
+### PartA
+
+- 使用std::cout和std::cerr都是可以的。
+- 使用./csim -s <num> -E <num> -b <num> -t <file> 就能看到你想要的输出。
+
+### PartB
+- 请使用std::cerr，不要使用std::cout！
+- 对于每一个case，请直接使用make case{i}编译。例如你想测试case0（2*2*2），make case0就能看到输出了。
+
+> 注意：test中的python脚本只是用来最后打分，方便大家看整体正确性和评分的，**请不要用他们进行debug。**
 
 ## 提交，报告，查重与打分
 
